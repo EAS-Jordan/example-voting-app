@@ -74,7 +74,7 @@ pipeline:
                               shell: Sh
                               command: |-
                                 sleep 15
-                                psql -U postgres -d test1 -h localhost -p5432
+                                psql -U postgres -d test1 -h localhost -p 5432
                           contextType: Pipeline
             rollbackSteps: []
           serviceDependencies: []
