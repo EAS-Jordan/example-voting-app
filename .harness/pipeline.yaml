@@ -41,6 +41,17 @@ pipeline:
                     shell: Sh
               - step:
                   type: Run
+                  name: test1
+                  identifier: test1
+                  spec:
+                    connectorRef: EASJordan
+                    image: redis:alpine
+                    shell: Sh
+                    command: |-
+                      sleep 5
+                      docker ls
+              - step:
+                  type: Run
                   name: test
                   identifier: test
                   spec:
