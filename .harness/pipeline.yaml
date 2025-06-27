@@ -12,7 +12,7 @@ pipeline:
         build: <+input>
   stages:
     - stage:
-        name: Build1
+        name: Build
         identifier: Build1
         description: ""
         type: CI
@@ -21,6 +21,7 @@ pipeline:
           caching:
             enabled: true
             override: false
+            paths: []
           infrastructure:
             type: KubernetesDirect
             spec:
@@ -49,7 +50,7 @@ pipeline:
                                 POSTGRES_PASSWORD: postgres
                         - step:
                             type: Run
-                            name: Run_2
+                            name: test_connection_2
                             identifier: Run_2
                             spec:
                               connectorRef: EASJordan
@@ -64,7 +65,7 @@ pipeline:
                           connectorRef: minikube_connector
                           namespace: default
                   - stepGroup:
-                      name: setup_redis1
+                      name: setup_redis
                       identifier: setup_redis1
                       steps:
                         - step:
@@ -100,3 +101,5 @@ pipeline:
                     repo: example-voting-app
                     tags:
                       - latest
+          buildIntelligence:
+            enabled: false
