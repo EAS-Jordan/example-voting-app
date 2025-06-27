@@ -44,7 +44,7 @@ pipeline:
                           shell: Sh
                           command: |-
                             sleep 15
-                            psql -U postgres -d test1 -h localhost -p 5432
+                            psql -U postgres -h localhost -p 5432
                   stepGroupInfra:
                     type: KubernetesDirect
                     spec:
