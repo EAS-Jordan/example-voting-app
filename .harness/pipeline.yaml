@@ -31,14 +31,6 @@ pipeline:
                           connectorRef: EASJordan
                           image: redis:alpine
                           shell: Sh
-                    - step:
-                        type: Run
-                        name: Run_1
-                        identifier: Run_1
-                        spec:
-                          connectorRef: EASJordan
-                          image: redis:alpine
-                          shell: Sh
                           command: |-
                             sleep 5
                             redis-cli -h redis ping
