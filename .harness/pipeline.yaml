@@ -69,11 +69,11 @@ pipeline:
                         identifier: Run_2
                         spec:
                           connectorRef: EASJordan
-                          image: postgres:15-alpine
+                          image: redis:alpine
                           shell: Sh
                           command: |-
                             sleep 5
-                            ping localhost:5432
+                            redis-cli -h localhost ping
                   stepGroupInfra:
                     type: KubernetesDirect
                     spec:
