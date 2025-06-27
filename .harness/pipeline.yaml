@@ -111,6 +111,7 @@ pipeline:
                     tags:
                       - latest
                     dockerfile: vote/Dockerfile
+                    context: vote/
           buildIntelligence:
             enabled: false
           sharedPaths:
