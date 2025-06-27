@@ -15,39 +15,39 @@ pipeline:
         name: Build
         identifier: Build
         description: ""
-        type: CI
+        type: Custom
         spec:
-          cloneCodebase: true
-          caching:
-            enabled: true
-            override: false
-          infrastructure:
-            type: KubernetesDirect
-            spec:
-              connectorRef: minikube_connector
-              namespace: default
-              automountServiceAccountToken: true
-              nodeSelector: {}
-              os: Linux
           execution:
             steps:
-              - step:
-                  type: Background
-                  name: redis
-                  identifier: redis
-                  spec:
-                    connectorRef: EASJordan
-                    image: redis:alpine
-                    container: redis
-                    shell: Sh
-              - step:
-                  type: Run
-                  name: test
-                  identifier: test
-                  spec:
-                    connectorRef: EASJordan
-                    image: redis:alpine
-                    shell: Sh
-                    command: |-
-                      sleep 50
-                      redis-cli -h redis ping
+              - stepGroup:
+                  name: Setup
+                  identifier: Setup
+                  steps:
+                    - step:
+                        type: Background
+                        name: redis
+                        identifier: redis
+                        spec:
+                          connectorRef: EASJordan
+                          image: redis:alpine
+                          shell: Sh
+                    - step:
+                        type: Run
+                        name: Run_1
+                        identifier: Run_1
+                        spec:
+                          connectorRef: EASJordan
+                          image: redis:alpine
+                          shell: Sh
+                          command: |-
+                            sleep 5
+                            redis-cli -h redis ping
+                  delegateSelectors:
+                    - minikube-helm-delegate
+                  stepGroupInfra:
+                    type: KubernetesDirect
+                    spec:
+                      connectorRef: minikube_connector
+            rollbackSteps: []
+          serviceDependencies: []
+        tags: {}
