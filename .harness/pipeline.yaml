@@ -100,7 +100,7 @@ pipeline:
                     connectorRef: EASJordan
                     image: alpine
                     shell: Sh
-                    command: ls vote/
+                    command: cat vote/Dockerfile
               - step:
                   type: BuildAndPushDockerRegistry
                   name: BuildAndPushDockerRegistry_1
@@ -110,7 +110,7 @@ pipeline:
                     repo: example-voting-app-vote
                     tags:
                       - latest
-                    dockerfile: /vote/Dockerfile
+                    dockerfile: vote/Dockerfile
           buildIntelligence:
             enabled: false
           sharedPaths:
