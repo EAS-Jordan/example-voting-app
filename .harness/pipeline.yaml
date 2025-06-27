@@ -41,7 +41,7 @@ pipeline:
                           shell: Sh
                           command: |-
                             sleep 10
-                            redis-cli -h setup_redis:6379 ping
+                            redis-cli -h setup_redis ping
                   delegateSelectors:
                     - minikube-helm-delegate
                   stepGroupInfra:
