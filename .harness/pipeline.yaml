@@ -19,65 +19,63 @@ pipeline:
         spec:
           execution:
             steps:
-              - stepGroup:
-                  name: setup_redis
-                  identifier: setup
-                  steps:
-                    - step:
-                        type: Background
-                        name: redis
-                        identifier: redis
+              - parallel:
+                  - stepGroup:
+                      name: setup_redis
+                      identifier: setup
+                      steps:
+                        - step:
+                            type: Background
+                            name: redis
+                            identifier: redis
+                            spec:
+                              connectorRef: EASJordan
+                              image: redis:alpine
+                              shell: Sh
+                        - step:
+                            type: Run
+                            name: Run_1
+                            identifier: Run_1
+                            spec:
+                              connectorRef: EASJordan
+                              image: redis:alpine
+                              shell: Sh
+                              command: |-
+                                sleep 5
+                                redis-cli -h localhost ping
+                      delegateSelectors:
+                        - minikube-helm-delegate
+                      stepGroupInfra:
+                        type: KubernetesDirect
                         spec:
-                          connectorRef: EASJordan
-                          image: redis:alpine
-                          shell: Sh
-                    - step:
-                        type: Run
-                        name: Run_1
-                        identifier: Run_1
-                        spec:
-                          connectorRef: EASJordan
-                          image: redis:alpine
-                          shell: Sh
-                          command: |-
-                            sleep 5
-                            redis-cli -h localhost ping
-                  delegateSelectors:
-                    - minikube-helm-delegate
-                  stepGroupInfra:
-                    type: KubernetesDirect
-                    spec:
-                      connectorRef: minikube_connector
-              - stepGroup:
-                  name: setup_postgres
-                  identifier: setup_postgres
-                  steps:
-                    - step:
-                        type: Background
-                        name: postgres
-                        identifier: postgres
-                        spec:
-                          connectorRef: EASJordan
-                          image: postgres:15-alpine
-                          shell: Sh
-                          envVariables:
-                            POSTGRES_USER: postgres
-                            POSTGRES_PASSWORD: postgres
-                    - step:
-                        type: Run
-                        name: Run_2
-                        identifier: Run_2
-                        spec:
-                          connectorRef: EASJordan
-                          image: postgres:15-alpine
-                          shell: Sh
-                          command: |-
-                            sleep 5
-                            localhost ping
-                  stepGroupInfra:
-                    type: KubernetesDirect
-                    spec:
-                      connectorRef: minikube_connector
+                          connectorRef: minikube_connector
+                  - stepGroup:
+                      name: setup_postgres
+                      identifier: setup_postgres
+                      steps:
+                        - step:
+                            type: Background
+                            name: postgres
+                            identifier: postgres
+                            spec:
+                              connectorRef: EASJordan
+                              image: postgres:15-alpine
+                              shell: Sh
+                              envVariables:
+                                POSTGRES_USER: postgres
+                                POSTGRES_PASSWORD: postgres
+                        - step:
+                            type: Run
+                            name: Run_2
+                            identifier: Run_2
+                            spec:
+                              connectorRef: EASJordan
+                              image: postgres:15-alpine
+                              shell: Sh
+                              command: |-
+                                sleep 15
+                                psql -U postgres -d test1 -h localhost -p5432
+                          contextType: Pipeline
             rollbackSteps: []
           serviceDependencies: []
         tags: {}
