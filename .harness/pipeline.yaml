@@ -49,14 +49,5 @@ pipeline:
                     image: redis:alpine
                     shell: Sh
                     command: |-
-                      sleep 5
+                      sleep 50
                       redis-cli -h redis ping
-              - step:
-                  type: BuildAndPushDockerRegistry
-                  name: BuildAndPushDockerRegistry_1
-                  identifier: BuildAndPushDockerRegistry_1
-                  spec:
-                    connectorRef: EASJordan
-                    repo: example-voting-app
-                    tags:
-                      - latest
