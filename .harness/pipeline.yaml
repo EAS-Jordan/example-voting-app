@@ -37,6 +37,7 @@ pipeline:
                   identifier: redis
                   spec:
                     connectorRef: EASJordan
+                    image: redis:alpine
                     container: redis
                     shell: Sh
               - step:
