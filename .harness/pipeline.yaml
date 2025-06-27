@@ -107,7 +107,7 @@ pipeline:
                   identifier: BuildAndPushDockerRegistry_1
                   spec:
                     connectorRef: EASJordan
-                    repo: example-voting-app-vote
+                    repo: easjordan/example-voting-app-vote
                     tags:
                       - latest
                     dockerfile: vote/Dockerfile
