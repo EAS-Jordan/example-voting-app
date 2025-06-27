@@ -20,8 +20,8 @@ pipeline:
           execution:
             steps:
               - stepGroup:
-                  name: Setup
-                  identifier: Setup
+                  name: setup
+                  identifier: setup
                   steps:
                     - step:
                         type: Background
@@ -31,9 +31,17 @@ pipeline:
                           connectorRef: EASJordan
                           image: redis:alpine
                           shell: Sh
+                    - step:
+                        type: Run
+                        name: Run_1
+                        identifier: Run_1
+                        spec:
+                          connectorRef: EASJordan
+                          image: redis:alpine
+                          shell: Sh
                           command: |-
-                            sleep 5
-                            redis-cli -h redis ping
+                            sleep 10
+                            redis-cli -h setup_redis:6379 ping
                   delegateSelectors:
                     - minikube-helm-delegate
                   stepGroupInfra:
