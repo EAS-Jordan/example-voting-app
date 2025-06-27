@@ -20,7 +20,7 @@ pipeline:
           execution:
             steps:
               - stepGroup:
-                  name: setup
+                  name: setup_redis
                   identifier: setup
                   steps:
                     - step:
@@ -40,10 +40,38 @@ pipeline:
                           image: redis:alpine
                           shell: Sh
                           command: |-
-                            sleep 10
+                            sleep 5
                             redis-cli -h localhost ping
                   delegateSelectors:
                     - minikube-helm-delegate
+                  stepGroupInfra:
+                    type: KubernetesDirect
+                    spec:
+                      connectorRef: minikube_connector
+              - stepGroup:
+                  name: setup_postgres
+                  identifier: setup_postgres
+                  steps:
+                    - step:
+                        type: Background
+                        name: postgres
+                        identifier: postgres
+                        spec:
+                          connectorRef: EASJordan
+                          image: postgres:15-alpine
+                          shell: Sh
+                          envVariables:
+                            POSTGRES_USER: postgres
+                            POSTGRES_PASSWORD: postgres
+                    - step:
+                        type: Run
+                        name: Run_2
+                        identifier: Run_2
+                        spec:
+                          connectorRef: EASJordan
+                          image: postgres:15-alpine
+                          shell: Sh
+                          command: /healthchecks/postgres.sh
                   stepGroupInfra:
                     type: KubernetesDirect
                     spec:
