@@ -100,7 +100,7 @@ pipeline:
                     connectorRef: EASJordan
                     image: alpine
                     shell: Sh
-                    command: ls
+                    command: ls vote/
               - step:
                   type: BuildAndPushDockerRegistry
                   name: BuildAndPushDockerRegistry_1
