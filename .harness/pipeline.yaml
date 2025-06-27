@@ -93,6 +93,15 @@ pipeline:
                         spec:
                           connectorRef: minikube_connector
               - step:
+                  type: Run
+                  name: Run_3
+                  identifier: Run_3
+                  spec:
+                    connectorRef: EASJordan
+                    image: alpine
+                    shell: Sh
+                    command: ls
+              - step:
                   type: BuildAndPushDockerRegistry
                   name: BuildAndPushDockerRegistry_1
                   identifier: BuildAndPushDockerRegistry_1
