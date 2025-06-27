@@ -41,7 +41,7 @@ pipeline:
                           shell: Sh
                           command: |-
                             sleep 10
-                            redis-cli -h localhost:6379 ping
+                            redis-cli -h localhost ping
                   delegateSelectors:
                     - minikube-helm-delegate
                   stepGroupInfra:
