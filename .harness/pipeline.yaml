@@ -31,21 +31,11 @@ pipeline:
                           connectorRef: EASJordan
                           image: postgres:15-alpine
                           shell: Sh
-                          envVariables:
-                            POSTGRES_USER: postgres
-                            POSTGRES_PASSWORD: postgres
-                    - step:
-                        type: Run
-                        name: test_connection_2
-                        identifier: Run_2
-                        spec:
-                          connectorRef: EASJordan
-                          image: postgres:15-alpine
-                          shell: Sh
-                          command: |-
-                            sleep 15
-                            psql -U postgres -d test1 -h localhost -p 5432
-                      contextType: Pipeline
+                  stepGroupInfra:
+                    type: KubernetesDirect
+                    spec:
+                      connectorRef: minikube_connector
+                      namespace: default
               - stepGroup:
                   name: setup_redis
                   identifier: setup
@@ -75,6 +65,7 @@ pipeline:
                     type: KubernetesDirect
                     spec:
                       connectorRef: minikube_connector
+                      namespace: default
             rollbackSteps: []
           serviceDependencies: []
         tags: {}
