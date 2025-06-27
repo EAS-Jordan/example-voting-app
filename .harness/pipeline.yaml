@@ -71,7 +71,9 @@ pipeline:
                           connectorRef: EASJordan
                           image: postgres:15-alpine
                           shell: Sh
-                          command: /healthchecks/postgres.sh
+                          command: |-
+                            sleep 5
+                            ping localhost:5432
                   stepGroupInfra:
                     type: KubernetesDirect
                     spec:
