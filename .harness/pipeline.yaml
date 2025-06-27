@@ -101,6 +101,8 @@ pipeline:
                     repo: example-voting-app-vote
                     tags:
                       - latest
-                    dockerfile: /vote
+                    dockerfile: harness/vote
           buildIntelligence:
             enabled: false
+          sharedPaths:
+            - ""
