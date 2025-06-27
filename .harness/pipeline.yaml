@@ -31,21 +31,25 @@ pipeline:
               os: Linux
           execution:
             steps:
-              - stepGroup:
-                  name: Background Processes
-                  identifier: Background_Processes
-                  steps:
-                    - step:
-                        type: Background
-                        name: Run Redis
-                        identifier: Run_Redis
-                        spec:
-                          connectorRef: EASJordan
-                          image: redis:alpine
-                          shell: Sh
-                          command: |-
-                            sleep 5
-                            redis-cli -h redis ping
+              - step:
+                  type: Background
+                  name: redis
+                  identifier: redis
+                  spec:
+                    connectorRef: EASJordan
+                    image: redis:alpine
+                    shell: Sh
+              - step:
+                  type: Run
+                  name: test
+                  identifier: test
+                  spec:
+                    connectorRef: EASJordan
+                    image: redis:alpine
+                    shell: Sh
+                    command: |-
+                      sleep 5
+                      redis-cli -h redis ping
               - step:
                   type: BuildAndPushDockerRegistry
                   name: BuildAndPushDockerRegistry_1
